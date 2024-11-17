@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Umbrella, Shell, Waves, Trash2, Sun, Cloud, Palmtree } from 'lucide-react'
+import { Check, Shell, Pencil, Trash2, Sun, Cloud } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -184,13 +184,13 @@ export function BlockPage() {
                     ) : (
                       <>
                         <Button onClick={() => toggleComplete(todo.id)} style={completeButtonStyle}>
-                          <Umbrella size={16} />
+                          <Check size={16} />
                         </Button>
                         <Button onClick={() => startEdit(todo)} style={buttonStyle}>
-                          <Waves size={16} />
+                          <Pencil size={16} />
                         </Button>
                         <Button onClick={() => deleteTodo(todo.id)} style={deleteButtonStyle}>
-                          <Palmtree size={16} />
+                          <Trash2 size={16} />
                         </Button>
                       </>
                     )}
