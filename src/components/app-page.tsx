@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Trash2, Check, X } from 'lucide-react'
+import { Umbrella, Shell, Waves, Trash2, Sun, Cloud, Palmtree } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -23,21 +23,59 @@ export function BlockPage() {
   // Styles for the background and container
   const containerStyle = {
     minHeight: '100vh',
+    width: '100vw',
+    margin: 0,
+    padding: 0,
     backgroundImage: 'url("/beach_pixel_art.png")',
-    backgroundSize: 'cover',
+    backgroundSize: '100% 100%',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
-    padding: '2rem',
+    backgroundAttachment: 'fixed',
     display: 'flex',
     flexDirection: 'column' as const,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden'
+  }
+
+  const mainContentStyle = {
+    width: '100%',
+    maxWidth: '800px',
+    padding: '2rem',
+    margin: '0 auto'
   }
 
   const cardStyle = {
-    background: 'rgba(255, 255, 255, 0.9)',
+    background: 'rgba(255, 255, 255, 0.85)',
     backdropFilter: 'blur(10px)',
     maxWidth: '600px',
-    width: '100%'
+    width: '100%',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)'
+  }
+
+  const buttonStyle = {
+    background: 'rgba(255, 166, 0, 0.9)',
+    color: 'white',
+    '&:hover': {
+      background: 'rgba(255, 140, 0, 1)'
+    }
+  }
+
+  const deleteButtonStyle = {
+    background: 'rgba(255, 99, 71, 0.9)',
+    color: 'white',
+    '&:hover': {
+      background: 'rgba(255, 69, 0, 1)'
+    }
+  }
+
+  const completeButtonStyle = {
+    background: 'rgba(46, 139, 87, 0.9)',
+    color: 'white',
+    '&:hover': {
+      background: 'rgba(34, 139, 34, 1)'
+    }
   }
 
   const addTodo = () => {
@@ -81,83 +119,105 @@ export function BlockPage() {
 
   return (
     <div style={containerStyle}>
-      <Card style={cardStyle}>
-        <CardHeader>
-          <CardTitle>Todo App</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex space-x-2 mb-4">
-            <Input
-              type="text"
-              placeholder="Add a new todo"
-              value={newTodo}
-              onChange={(e) => setNewTodo(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && addTodo()}
-            />
-            <Button onClick={addTodo}>
-              <Plus className="mr-2 h-4 w-4" /> Add
-            </Button>
-          </div>
-          <ul className="space-y-2">
-            {currentTodos.map(todo => (
-              <li key={todo.id} className="flex items-center space-x-2">
-                {editingId === todo.id ? (
-                  <>
+      <div style={mainContentStyle}>
+        <Card style={cardStyle}>
+          <CardHeader>
+            <CardTitle style={{ color: '#1e3a5f', fontSize: '2rem', textAlign: 'center' }}>Tareas</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex space-x-2 mb-4">
+              <Input
+                value={newTodo}
+                onChange={(e) => setNewTodo(e.target.value)}
+                placeholder="Agregar nueva tarea..."
+                onKeyPress={(e) => e.key === 'Enter' && addTodo()}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.9)',
+                  border: '1px solid rgba(30, 58, 95, 0.3)',
+                  borderRadius: '0.5rem'
+                }}
+              />
+              <Button onClick={addTodo} style={buttonStyle}>
+                <Shell size={20} />
+              </Button>
+            </div>
+            <div className="space-y-2">
+              {currentTodos.map((todo) => (
+                <div
+                  key={todo.id}
+                  className="flex items-center justify-between p-2 rounded"
+                  style={{
+                    background: todo.completed ? 'rgba(144, 238, 144, 0.2)' : 'rgba(255, 255, 255, 0.7)',
+                    border: '1px solid rgba(30, 58, 95, 0.1)',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  {editingId === todo.id ? (
                     <Input
-                      type="text"
                       value={editText}
                       onChange={(e) => setEditText(e.target.value)}
-                      className="flex-grow"
+                      onKeyPress={(e) => e.key === 'Enter' && saveEdit()}
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.9)',
+                        border: '1px solid rgba(30, 58, 95, 0.3)'
+                      }}
                     />
-                    <Button size="icon" onClick={saveEdit}>
-                      <Check className="h-4 w-4" />
-                    </Button>
-                    <Button size="icon" variant="outline" onClick={cancelEdit}>
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Input
-                      type="checkbox"
-                      checked={todo.completed}
-                      onChange={() => toggleComplete(todo.id)}
-                      className="w-4 h-4"
-                    />
-                    <span
-                      className={`flex-grow ${todo.completed ? 'line-through text-gray-500' : ''}`}
-                      onDoubleClick={() => startEdit(todo)}
-                    >
+                  ) : (
+                    <span style={{
+                      textDecoration: todo.completed ? 'line-through' : 'none',
+                      color: todo.completed ? '#666' : '#1e3a5f',
+                      flex: 1
+                    }}>
                       {todo.text}
                     </span>
-                    <Button size="icon" variant="outline" onClick={() => startEdit(todo)}>
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                    <Button size="icon" variant="destructive" onClick={() => deleteTodo(todo.id)}>
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </>
-                )}
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button
-            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </Button>
-          <span>Page {currentPage} of {totalPages}</span>
-          <Button
-            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </Button>
-        </CardFooter>
-      </Card>
+                  )}
+                  <div className="flex space-x-2">
+                    {editingId === todo.id ? (
+                      <>
+                        <Button onClick={saveEdit} style={completeButtonStyle}>
+                          <Sun size={16} />
+                        </Button>
+                        <Button onClick={() => setEditingId(null)} style={deleteButtonStyle}>
+                          <Cloud size={16} />
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button onClick={() => toggleComplete(todo.id)} style={completeButtonStyle}>
+                          <Umbrella size={16} />
+                        </Button>
+                        <Button onClick={() => startEdit(todo)} style={buttonStyle}>
+                          <Waves size={16} />
+                        </Button>
+                        <Button onClick={() => deleteTodo(todo.id)} style={deleteButtonStyle}>
+                          <Palmtree size={16} />
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              style={buttonStyle}
+            >
+              Anterior
+            </Button>
+            <span style={{ color: '#1e3a5f' }}>Página {currentPage} de {totalPages}</span>
+            <Button
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              style={buttonStyle}
+            >
+              Siguiente
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   )
 }
