@@ -15,7 +15,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Beach Tasks - Todo App",
+  title: "Todo App",
   description: "A beautiful beach-themed todo application",
 };
 

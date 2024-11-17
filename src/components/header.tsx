@@ -23,7 +23,7 @@ export function HeaderComponent() {
       <div className="container mx-auto flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
           <Palmtree className="h-6 w-6 text-orange-500" />
-          <span className="text-xl font-bold text-[#1e3a5f]">Beach Tasks</span>
+          <span className="text-xl font-bold text-[#1e3a5f]">AI Todo</span>
         </Link>
 
         <DropdownMenu>
