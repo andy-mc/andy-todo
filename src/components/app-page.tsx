@@ -22,10 +22,10 @@ export function BlockPage() {
 
   // Styles for the background and container
   const containerStyle = {
-    minHeight: '100vh',
-    width: '100vw',
+    minHeight: 'calc(100vh - 4rem)',
+    width: '100%',
     margin: 0,
-    padding: 0,
+    padding: '2rem 0',
     backgroundImage: 'url("/beach_pixel_art.png")',
     backgroundSize: '100% 100%',
     backgroundPosition: 'center',
@@ -34,14 +34,14 @@ export function BlockPage() {
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden'
+    justifyContent: 'flex-start',
+    overflow: 'auto'
   }
 
   const mainContentStyle = {
     width: '100%',
     maxWidth: '800px',
-    padding: '2rem',
+    padding: '0 2rem',
     margin: '0 auto'
   }
 
