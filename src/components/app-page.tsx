@@ -20,6 +20,26 @@ export function BlockPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const todosPerPage = 10
 
+  // Styles for the background and container
+  const containerStyle = {
+    minHeight: '100vh',
+    backgroundImage: 'url("/beach_pixel_art.png")',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    padding: '2rem',
+    display: 'flex',
+    flexDirection: 'column' as const,
+    alignItems: 'center'
+  }
+
+  const cardStyle = {
+    background: 'rgba(255, 255, 255, 0.9)',
+    backdropFilter: 'blur(10px)',
+    maxWidth: '600px',
+    width: '100%'
+  }
+
   const addTodo = () => {
     if (newTodo.trim()) {
       setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }])
@@ -60,8 +80,8 @@ export function BlockPage() {
   const totalPages = Math.ceil(todos.length / todosPerPage)
 
   return (
-    <main className="container mx-auto p-4">
-      <Card className="w-full max-w-2xl mx-auto">
+    <div style={containerStyle}>
+      <Card style={cardStyle}>
         <CardHeader>
           <CardTitle>Todo App</CardTitle>
         </CardHeader>
@@ -138,6 +158,6 @@ export function BlockPage() {
           </Button>
         </CardFooter>
       </Card>
-    </main>
+    </div>
   )
 }
