@@ -1,17 +1,19 @@
 import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
 import { firebaseConfig } from '@/config';
 
-// Singleton pattern para la instancia de Firebase
 let firebaseInstance: FirebaseApp | undefined;
 
 export const getFirebaseApp = (): FirebaseApp => {
-  if (!firebaseInstance && typeof window !== 'undefined') {
-    // Solo inicializa si no existe una instancia y estamos en el cliente
-    firebaseInstance = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
+  if (typeof window === 'undefined') {
+    throw new Error('Firebase can only be initialized in the browser');
   }
-  
+
   if (!firebaseInstance) {
-    throw new Error('Firebase instance not initialized');
+    if (!getApps().length) {
+      firebaseInstance = initializeApp(firebaseConfig);
+    } else {
+      firebaseInstance = getApps()[0];
+    }
   }
 
   return firebaseInstance;
